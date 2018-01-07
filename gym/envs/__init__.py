@@ -507,3 +507,7 @@ register(
     entry_point='gym.envs.safety:OffSwitchCartpoleProbEnv',
     max_episode_steps=200,
 )
+register(
+    id='Snake-v0',
+    entry_point='gym.envs.id2223:SnakeEnv',
+)
