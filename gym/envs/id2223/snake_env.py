@@ -8,7 +8,7 @@ from gym.envs.id2223 import snake
 NUM_ACTIONS = 4
 
 class SnakeEnv(gym.Env,utils.EzPickle):
-    def __init__(self, shape=(64,64), seed=None, num_apples=3):
+    def __init__(self, shape=(42,42), seed=None, num_apples=3):
         self.shape = shape + (1,)
         self.action_space = spaces.Discrete(NUM_ACTIONS)
         self.observation_space = spaces.Box(low=0,high=3,shape=self.shape)
@@ -34,6 +34,7 @@ class SnakeEnv(gym.Env,utils.EzPickle):
             info['gameover!'] = str(*e.args)
 
         new_score = self.game.score
+
         reward = float(-10 if self.game.is_over else new_score - score)
 
         # (observation, reward, terminal, info) in accordance with gym api
@@ -45,8 +46,8 @@ class SnakeEnv(gym.Env,utils.EzPickle):
                                apples=self.num_apples)
         return self.board
 
-    def _render(self, mode='human', close=False):
-        raise NotImplementedError
+    #def _render(self, mode='human', close=False):
+    #    raise NotImplementedError
 
     def _close(self):
         self._reset()
