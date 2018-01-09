@@ -8,7 +8,7 @@ from gym.envs.id2223 import snake
 NUM_ACTIONS = 4
 
 class SnakeEnv(gym.Env,utils.EzPickle):
-    def __init__(self, shape=(42,42), seed=None, num_apples=3):
+    def __init__(self, shape=(10,10), seed=None, num_apples=1):
         self.shape = shape + (1,)
         self.action_space = spaces.Discrete(NUM_ACTIONS)
         self.observation_space = spaces.Box(low=0,high=3,shape=self.shape)
@@ -20,7 +20,8 @@ class SnakeEnv(gym.Env,utils.EzPickle):
 
     @property
     def board(self):
-        return self.game.board.reshape(self.shape)
+        # HACK: extend values within 0-255
+        return self.game.board.reshape(self.shape) * 85
 
     def _step(self, action):
         assert self.game, "Cannot call env.step() before calling reset()"
@@ -28,6 +29,7 @@ class SnakeEnv(gym.Env,utils.EzPickle):
 
         score = self.game.score
         info = {}
+
         try:
             self.game.next(snake.dirs[action])
         except snake.GameOver as e:

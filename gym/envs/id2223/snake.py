@@ -26,10 +26,7 @@ class game(object):
         game.segments = [game.position]
         game.extensions = extensions
         game.current_cell = snake_segment
-        game.seed = seed
         game.last_action = None
-        if seed:
-            np.random.seed(seed)
         for i in range(apples):
             game.put_apple()
 
